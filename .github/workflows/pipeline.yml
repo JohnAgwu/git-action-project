@@ -7,12 +7,10 @@ jobs:
  Deploy:
    name: "deploy to EC2"
    runs-on: ubuntu-latest
-
    steps:
     - uses: actions/checkout@v2
     - name: install script
-
-    run: |
-     echo " we aren't doing much yet"
+      run: |
+       echo " we aren't doing much yet"
       
 
