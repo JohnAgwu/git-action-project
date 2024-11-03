@@ -10,8 +10,10 @@ jobs:
    steps:
     - uses: actions/checkout@v2
     - name: install script
+      env:
+        PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
-       echo "this is Sunday"
-       echo "first day of the week"
+       echo "$PRIVATE_KEY" > sunday.pem && chmod 600 sunday.pem
+       ssh -i sunday.pem ec2-user@18.171.150.211 'ls -ltr'
       
 
