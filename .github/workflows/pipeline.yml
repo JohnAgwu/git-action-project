@@ -11,6 +11,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: install script
       run: |
-       echo " we aren't doing much yet"
+       echo "this is Sunday"
+       echo "first day of the week"
       
 
