@@ -14,7 +14,13 @@ jobs:
         PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
        echo "$PRIVATE_KEY" > sunday.pem && chmod 600 sunday.pem
-       echo  "connecting to the box and installing GIT"
-       ssh -o StrictHostKeyChecking=no -i sunday.pem ec2-user@18.171.150.211 'sudo yum install git -y'
+       echo "copy readme file to the target node"
+       scp -o StrictHostKeyChecking=no -i sunday.pem README.md ec2-user@18.171.150.211:~/
+       echo  "connecting to the box and install a couple of apps"
+       ssh -o StrictHostKeyChecking=no -i sunday.pem ec2-user@18.171.150.211 '
+       sudo yum install git -y
+       sudo yum install nginx -y
+       sudo service nginx start
+       '
       
 
