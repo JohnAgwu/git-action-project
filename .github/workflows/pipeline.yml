@@ -27,21 +27,34 @@ jobs:
   
      - name: Terraform Apply
        run: terraform apply --auto-approve
+    
+     - name: Get EC2 Instance Public IP and DNS
+       run: |
+         # Get Public IP and Public DNS from Terraform outputs
+         PUBLIC_IP=$(terraform output -raw instance_public_ip)
+         PUBLIC_DNS=$(terraform output -raw instance_public_dns)
+
+         echo "Public IP: $PUBLIC_IP"
+         echo "Public DNS: $PUBLIC_DNS"
+
+         # Set as outputs to use in subsequent steps if needed
+         echo "::set-output name=public_ip::$PUBLIC_IP"
+         echo "::set-output name=public_dns::$PUBLIC_DNS"
 
   # Deploy:
   #  name: "deploy to EC2"
   #  runs-on: ubuntu-latest
   #  steps:
   #   - uses: actions/checkout@v2
-  #   - name: install script
+  #   - name: install script and copy files
   #     env:
   #       PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
   #     run: |
-  #      echo "$PRIVATE_KEY" > sunday.pem && chmod 600 sunday.pem
-  #      echo "copy readme file to the target node"
-  #      scp -o StrictHostKeyChecking=no -i sunday.pem README.md ec2-user@18.171.150.211:~/
+  #      echo "$PRIVATE_KEY" > jonag.pem && chmod 600 jonag.pem
+  #      echo "copy index file to the target node"
+  #      scp -o StrictHostKeyChecking=no -i jonag.pem index.html ec2-user@18.171.150.211:~/
   #      echo  "connecting to the box and install a couple of apps"
-  #      ssh -o StrictHostKeyChecking=no -i sunday.pem ec2-user@18.171.150.211 '
+  #      ssh -o StrictHostKeyChecking=no -i jonag.pem ec2-user@18.171.150.211 '
   #      sudo yum install git -y
   #      sudo yum install nginx -y
   #      sudo service nginx start

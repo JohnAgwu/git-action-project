@@ -4,6 +4,7 @@ provider "aws" {
 resource "aws_instance" "ec-create" {
   ami           = "ami-0b4c7755cdf0d9219"
   instance_type = "t2.micro"
+  associate_public_ip_address = true
   subnet_id     = aws_subnet.public_subnet.id
   key_name      = "jonag"
 
@@ -98,4 +99,12 @@ resource "aws_security_group" "frontend_sg" {
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
+}
+
+output "instance_public_ip" {
+  value = aws_instance.ec-create.public_ip
+}
+
+output "instance_public_dns" {
+  value = aws_instance.ec-create.public_dns
 }
