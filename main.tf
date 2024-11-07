@@ -16,7 +16,7 @@ resource "aws_instance" "ec-create" {
 terraform {
   backend "s3" {
     bucket = "jonag-terraform-store"
-    key    = "project2/terraform.tfstate"
+    key    = "project/terraform.tfstate"
     region = "eu-west-2"
   }
 }
