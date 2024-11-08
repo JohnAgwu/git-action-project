@@ -7,6 +7,7 @@ resource "aws_instance" "ec-create" {
   associate_public_ip_address = true
   subnet_id     = aws_subnet.public_subnet.id
   key_name      = "jonag"
+  vpc_security_group_ids = [aws_security_group.frontend_sg.id]
 
   tags = {
     Name = "Node2-Created-By-GitAction"
